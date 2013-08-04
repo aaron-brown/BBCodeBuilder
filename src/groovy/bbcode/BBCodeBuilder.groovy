@@ -635,10 +635,10 @@ class BBCodeBuilder {
      * &#08;[tr][td]1[/td][td]2[/td][td]3[/td][/tr][/table]</code>.
      */
     public final String table(List tableMatrix) {
-        new BBCodeTableBuilder().render(tableMatrix)
+        new BBCodeTableBuilder().table(tableMatrix)
     }
 
     public final String table(Closure closure) {
-        new BBCodeTableBuilder().render(closure)
+        new BBCodeTableBuilder().table(closure)
     }
 }

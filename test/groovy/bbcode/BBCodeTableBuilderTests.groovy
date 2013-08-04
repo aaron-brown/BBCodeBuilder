@@ -2,73 +2,20 @@ package groovy.bbcode
 
 import groovy.util.GroovyTestCase
 
-import groovy.bbcode.BBCodeBuilder
+import groovy.bbcode.BBCodeTableBuilder
 
-class BBCodeBuilderTests extends GroovyTestCase
+class BBCodeTableBuilderTests extends GroovyTestCase
 {
-    BBCodeBuilder builder
+    BBCodeTableBuilder builder
 
     void setUp()
     {
-        builder = new BBCodeBuilder()
+        builder = new BBCodeTableBuilder()
     }
 
     void testDefault()
     {
         assert(true)
-    }
-
-    void testBold()
-    {
-        assertEquals('[b]foo[/b]', builder.bold('foo'))
-        assertEquals('[b]foo[/b]', builder.b('foo'))
-    }
-
-    void testItalics()
-    {
-        assertEquals('[i]foo[/i]', builder.italics('foo'))
-        assertEquals('[i]foo[/i]', builder.ital('foo'))
-        assertEquals('[i]foo[/i]', builder.i('foo'))
-    }
-
-    void testStrikethrough()
-    {
-        assertEquals('[s]foo[/s]', builder.strikethrough('foo'))
-        assertEquals('[s]foo[/s]', builder.strike('foo'))
-        assertEquals('[s]foo[/s]', builder.s('foo'))
-    }
-
-    void testUnderline()
-    {
-        assertEquals('[u]foo[/u]', builder.underline('foo'))
-        assertEquals('[u]foo[/u]', builder.ul('foo'))
-        assertEquals('[u]foo[/u]', builder.u('foo'))
-    }
-
-    void testUrl()
-    {
-        assertEquals('[url]foo[/url]', builder.url('foo'))
-        assertEquals('[url="foo"]bar[/url]', builder.url('foo', 'bar'))
-    }
-
-    void testColors()
-    {
-        assertEquals(
-            '[color="#FF0000"]foo[/color]',
-            builder.color('#FF0000', 'foo')
-        )
-
-        assertEquals('[color="red"]foo[/color]', builder.red('foo'))
-        assertEquals(
-            '[color="orange"]foo[/color]', builder.orange('foo'))
-        assertEquals(
-            '[color="yellow"]foo[/color]', builder.yellow('foo'))
-        assertEquals('[color="green"]foo[/color]', builder.green('foo'))
-        assertEquals('[color="blue"]foo[/color]', builder.blue('foo'))
-        assertEquals(
-            '[color="purple"]foo[/color]', builder.purple('foo'))
-        assertEquals('[color="black"]foo[/color]', builder.black('foo'))
-        assertEquals('[color="white"]foo[/color]', builder.white('foo'))
     }
 
     void testTableByListParam()
@@ -305,6 +252,6 @@ class BBCodeBuilderTests extends GroovyTestCase
             }
         }
 
-        assertEquals(expected, table)
+        assertEquals(expected, s)
     }
 }

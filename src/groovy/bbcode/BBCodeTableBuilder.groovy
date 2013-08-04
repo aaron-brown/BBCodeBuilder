@@ -35,16 +35,29 @@ class BBCodeTableBuilder {
      */
     private final bbCodeBuilder = new BBCodeBuilder()
 
-    public final String render(Closure closure) {
+    public final String table(List tableMatrix) {
+        this.tableMatrix = tableMatrix
+
+        render()
+    }
+
+    public final String table(Closure closure) {
         run closure
 
         render()
     }
 
-    public final String render(List tableMatrix) {
-        this.tableMatrix = tableMatrix
+    public final BBCodeTableBuilder tableRow(Object... tableData) {
+        tableMatrix << tableData
+        return this
+    }
 
-        render()
+    public final BBCodeTableBuilder tr(Object... tds) {
+        tableRow(tds)
+    }
+
+    public final String subTable(Closure closure) {
+        new BBCodeTableBuilder().table(closure)
     }
 
     public final String render() {
@@ -57,7 +70,7 @@ class BBCodeTableBuilder {
             }
         }
 
-        return (table as String)
+        return table
     }
 
     public String toString() {
@@ -156,13 +169,5 @@ class BBCodeTableBuilder {
 
     public final String white(Object renderText) {
         bbCodeBuilder.white(renderText)
-    }
-
-    public final String table(List tableMatrix) {
-        bbCodeBuilder.table(tableMatrix)
-    }
-
-    public final String table(Closure closure) {
-        bbCodeBuilder.table(closure)
     }
 }
