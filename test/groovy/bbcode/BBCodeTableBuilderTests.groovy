@@ -252,6 +252,6 @@ class BBCodeTableBuilderTests extends GroovyTestCase
             }
         }
 
-        assertEquals(expected, s)
+        assertEquals(expected, table)
     }
 }
