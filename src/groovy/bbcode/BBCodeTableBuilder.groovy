@@ -93,9 +93,11 @@ class BBCodeTableBuilder {
     }
 
     private final void run(Closure closure) {
-        closure.delegate = this
-        closure.resolveStrategy = Closure.DELEGATE_FIRST
-        closure.call()
+        Closure runClosure = closure.clone()
+
+        runClosure.delegate = this
+        runClosure.resolveStrategy = Closure.DELEGATE_FIRST
+        runClosure()
     }
 
     public final String bold(Object toBold) {
