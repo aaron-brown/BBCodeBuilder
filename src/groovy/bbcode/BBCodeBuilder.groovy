@@ -45,183 +45,11 @@ import groovy.bbcode.BBCodeTableBuilder
  * <h2>Building Tables</h2>
  *
  * <p>
- * The <i>true</i> builder syntax is invoked by the
- * {@link #table(Closure)} method:
+ * Building Tables is done through either the {@link #table(List)} or
+ * {@link #table(Closure)} functions, which are implemented by
+ * <b><code>BBCodeTableBuilder</code></b>.
  *
- * <code><pre>
- * String table = new BBCodeBuilder().table {
- *     tableMatrix = [
- *         ["Header 1", "Header 2", "Header 3"],
- *         ["Body 1-1", "Body 2-1", "Body 3-1"],
- *         ["Body 1-2", "Body 2-2", "Body 3-2"]
- *     ]
- * }
- *
- * println table
- * </pre></code>
- *
- * Which produces an output similar to the following, but without
- * newlines and indentation (a single-line <code>String</code>):
- *
- * <code><pre>
- * [table]
- *   [tr]
- *     [td]Header 1[/td]
- *     [td]Header 2[/td]
- *     [td]Header 3[/td]
- *   [/tr]
- *   [tr]
- *     [td]Body 1-1[/td]
- *     [td]Body 2-1[/td]
- *     [td]Body 3-1[/td]
- *   [/tr]
- *   [tr]
- *      [td]Body 1-2[/td]
- *      [td]Body 2-2[/td]
- *      [td]Body 3-2[/td]
- *   [/tr]
- * [/table]
- * </pre></code>
- *
- * Which then renders the table:<br />
- *
- * <table border="1">
- *   <tr>
- *     <td>Header 1</td>
- *     <td>Header 2</td>
- *     <td>Header 3</td>
- *   </tr>
- *   <tr>
- *     <td>Body 1-1</td>
- *     <td>Body 2-1</td>
- *     <td>Body 3-1</td>
- *   </tr>
- *   <tr>
- *     <td>Body 1-2</td>
- *     <td>Body 2-2</td>
- *     <td>body 3-2</td>
- *   </tr>
- * </table>
- * </p>
- *
- * <p>
- * Methods similar to {@link #b(Object)} can be used within the
- * <b><code>table(Closure)</code></b> function:
- *
- * <code><pre>
- * String table = new BBCodeBuilder().table {
- *     tableMatrix = [
- *         [b("Header 1"), b("Header 2"), b("Header 3")],
- *         ["Body 1-1", "Body 2-1", "Body 3-1"],
- *         ["Body 1-2", "Body 2-2", "Body 3-2"]
- *     ]
- * }
- *
- * println table
- * </pre></code>
- *
- * Produces:
- * <code><pre>
- * [table]
- *   [tr]
- *     [td][b]Header 1[/b][/td]
- *     [td][b]Header 2[/b][/td]
- *     [td][b]Header 3[/b][/td]
- *   [/tr]
- *   [tr]
- *     [td]Body 1-1[/td]
- *     [td]Body 2-1[/td]
- *     [td]Body 3-1[/td]
- *   [/tr]
- *   [tr]
- *      [td]Body 1-2[/td]
- *      [td]Body 2-2[/td]
- *      [td]Body 3-2[/td]
- *   [/tr]
- * [/table]
- * </pre></code>
- *
- * And renders the table:<br />
- *
- * <table border="1">
- *   <tr>
- *     <th>Header 1</th>
- *     <th>Header 2</th>
- *     <th>Header 3</th>
- *   </tr>
- *   <tr>
- *     <td>Body 1-1</td>
- *     <td>Body 2-1</td>
- *     <td>Body 3-1</td>
- *   </tr>
- *   <tr>
- *     <td>Body 1-2</td>
- *     <td>Body 2-2</td>
- *     <td>body 3-2</td>
- *   </tr>
- * </table>
- * </p>
- *
- * <h3>Nested Tables</h3>
- *
- * <p>
- * The <code>BBCodeBuilder</code> has the ability to generate nested
- * tables, which can also include the simple BBCode element methods:
- *
- * <code><pre>
- * String table = new BBCodeBuilder().table {
- *     tableMatrix = [
- *         [b("T1 H1"), b("T1 H2")],
- *         ["T1 H1 B1", "T1 H2 B1"],
- *         ["T1 H1 B2", "T1 H2 B2"],
- *         [
- *             table {
- *                 tableMatrix = [
- *                     [b(red("T2 H1")), b(blue("T2 H2"))],
- *                     ["T2 H1 B1", "T2 H2 B1"],
- *                     ["T2 H1 B2", "T2 H2 B2"]
- *                 ]
- *             }
- *         ]
- *     ]
- * }
- * </pre></code>
- *
- * Produces:
- *
- * <code><pre>
- * [table]
- *     [tr]
- *         [td][b]T1 H1[/b]
- *         [td][b]T1 H2[/b]
- *     [/tr]
- *     [tr]
- *         [td]T1 H1 B1[/td]
- *         [td]T1 H2 B1[/td]
- *     [/tr]
- *         [td]T1 H1 B2[/td]
- *         [td]T1 H2 B2[/td]
- *     [tr]
- *         [table]
- *             [tr]
- *                 [td][b][color="red"]T2 H1[/color][/b][/td]
- *                 [td][b][color="blue"]T2 H2[/color][/b][/td]
- *             [/tr]
- *             [tr]
- *                 [td]T2 H1 B1[/td]
- *                 [td]T2 H2 B1[/td]
- *             [/tr]
- *             [tr]
- *                 [td]T2 H1 B2[/td]
- *                 [td]T2 H2 B2[/td]
- *             [/tr]
- *         [/table]
- *     [/tr]
- * [/table]
- * </pre></code>
- *
- * (Table render omitted due to deprecated HTML rendering).
- * </p>
+ * @see groovy.bbcode.BBCodeTableBuilder
  *
  * @author Aaron Brown
  */
@@ -546,98 +374,58 @@ class BBCodeBuilder {
     }
 
     /**
-     * Construct a BBCode Table.
-     *
-     * <p>
-     * The <code>tableMatrix</code> is a matrix-like construction of
-     * the table using a series of <code>List</code>s within the
-     * <code>tableMatrix</code> list.
-     * </p>
-     *
-     * <p>
-     * The outer <code>List</code> represents the
-     * <code>[table][/table]</code> structure, like so:
-     *
-     * <code><pre>
-     * List tableMatrix = [
-     *     // [table][/table]
-     * ]
-     * </pre></code>
-     *
-     * The outer list consists of a series of inner lists, each one
-     * representing a <code>[tr][/tr]<code> element:
-     *
-     * <code><pre>
-     * List tableMatrix = [
-     *     // [table][/table]
-     *     [
-     *         // [tr][/tr]
-     *     ],
-     *     [
-     *         // [tr][/tr]
-     *     ],
-     *     [
-     *         // [tr][/tr]
-     *     ]
-     * ]
-     * </pre></code>
-     *
-     * The contents of each inner <code>List</code> is converted to
-     * a <code>String</code>, and constitues the <code>[td][/td]</code>
-     * elements:
-     *
-     * <code><pre>
-     * List tableMatrix = [
-     *     // [table][/table]
-     *
-     *     [
-     *         // [tr][/tr]
-     *
-     *         ["a"], // [td]a[/td]
-     *         ["b"], // [td]b[/td]
-     *         ["c"], // [td]c[/td]
-     *     ],
-     *     [
-     *         // [tr][/tr]
-     *
-     *         [1], // [td]1[/td]
-     *         [2], // [td]2[/td]
-     *         [3], // [td]3[/td]
-     *     ],
-     *     [
-     *         // [tr][/tr]
-     *
-     *         ["morning"], // [td]morning[/td]
-     *         ["noon"],    // [td]noon[/td]
-     *         ["night"],   // [td]night[/td]
-     *     ]
-     * ]
-     * </pre></code>
-     * </p>
-     *
-     * <p>
-     * For builder-style construction, see {@link #table(Closure)}.
-     * </p>
+     * Construct a BBCode Table out of a pre-established
+     * <code>tableMatrix</code>-like structure.
      *
      * @param   tableMatrix
      *
-     * A nested <code>List</code> structure, where the outer list is
-     * the <code>[table][/table]</code> element, the inner
-     * <code>List</code>s are the <code>[td][/td]</code> elements,
-     * and the items in the inner <code>List</code> are the the
-     * <code>[td][/td]</code> elements.
+     * A <code>tableMatrix</code> is a
+     * <code>List&lt;List&lt;Object&gt;&gt;</code>, where the inner
+     * <code>List&lt;Object&gt;</code> represents Table Row elements and
+     * <code>Object</code> represents Table Data Content.
      *
      * @return
      *
-     * A <code>String</code>, where
-     * <code>[["a", "b", "c"], [1, 2, 3]] =</code>
-     * <code>[table][tr][td]a[/td][td]b[/td][td]c[/td][/tr]
-     * &#08;[tr][td]1[/td][td]2[/td][td]3[/td][/tr][/table]</code>.
+     * A <code>[table][tr][td][/td][/tr][/table]</code> structure, as
+     * derived by the structure of the <code>tableMatrix</code>.
      */
     public final String table(List tableMatrix) {
         new BBCodeTableBuilder().table(tableMatrix)
     }
 
+    /**
+     * Build a table.
+     *
+     * <p>
+     * Sample Usage:
+     *
+     * <code><pre>
+     * String table = new BBCodeBuilder().table {
+     *     tr('one', 'two', 'three')
+     *     tr(
+     *         'Side-Header',
+     *         subTable {
+     *             tr('Vertical', 1)
+     *             tr('Headers', 2)
+     *         }
+     *     )
+     *     tr('four', 'five', 'six')
+     * }
+     * </pre></code>
+     * </p>
+     *
+     * @param   closure
+     *
+     * A <code>Closure</code> which consists of a series of
+     * <code>tr(Object...)</code> and possibly
+     * <code>subTable(Closure)</code> calls.
+     *
+     * @return
+     *
+     * A <code>[table][tr][td][/td][/tr][/table]</code> structure, as
+     * derived by order and nature of the <code>tr(Object...)</code>
+     * and possibly <code>subTable(Closure)</code> calls.
+     */
     public final String table(Closure closure) {
         new BBCodeTableBuilder().table(closure)
     }
