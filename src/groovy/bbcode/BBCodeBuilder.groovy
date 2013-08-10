@@ -429,4 +429,13 @@ class BBCodeBuilder {
     public final String table(Closure closure) {
         new BBCodeTableBuilder().table(closure)
     }
+
+    public final String build(Closure closure) {
+        Closure runClosure = closure.clone()
+
+        runClosure.delegate = this
+        runClosure.resolveStrategy = Closure.DELEGATE_FIRST
+
+        runClosure()
+    }
 }

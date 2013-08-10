@@ -307,4 +307,52 @@ class BBCodeBuilderTests extends GroovyTestCase
 
         assertEquals(expected, table)
     }
+
+    void testBuildStringSimple()
+    {
+        Date date = new Date()
+
+        String expected =
+            "[b]${date}[/b]"
+
+        String build = builder.build {
+            b(new Date())
+        }
+
+        assertEquals(expected, build)
+    }
+
+    void testBuildStringMedium()
+    {
+        String expected =
+            '[b]Hello[/b] [i][color="red"]Wor[/color][/i]ld!'
+
+        String build = builder.build {
+            "${b('Hello')} ${i(red('Wor'))}ld!"
+        }
+
+        assertEquals(expected, build)
+    }
+
+    void testBuildStringDocstring()
+    {
+        String expected = """\
+            [b]This[/b] is my docstring.
+
+            [i]It[/i] is [color="green"]formatted[/color] with
+            [i]BBCode[/i], made from the
+            [u][b][color="blue"]BBCodeBuilder[/color][/b][/u].\
+        """
+
+        String build = builder.build { """\
+            ${b('This')} is my docstring.
+
+            ${i('It')} is ${green('formatted')} with
+            ${i('BBCode')}, made from the
+            ${u(b(blue('BBCodeBuilder')))}.\
+        """
+        }
+
+        assertEquals(expected, build)
+    }
 }
