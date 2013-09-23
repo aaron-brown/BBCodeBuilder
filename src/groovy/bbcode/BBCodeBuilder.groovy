@@ -196,7 +196,9 @@ class BBCodeBuilder {
      * {@link #url(String, Object)}.
      * </p>
      *
-     * @param   url the URL.
+     * @param   url
+     *
+     * the URL.
      *
      * @return The <code>String</code>: <code>[url]foo[/url]</code>.
      */
@@ -212,9 +214,13 @@ class BBCodeBuilder {
      * {@link #url(String)}.
      * </p>
      *
-     * @param   url the URL.
+     * @param   url
      *
-     * @param   renderText  The text to render in place of URL text.
+     * the URL.
+     *
+     * @param   renderText
+     *
+     * The text to render in place of URL text.
      *
      * @return
      *
@@ -374,6 +380,96 @@ class BBCodeBuilder {
     }
 
     /**
+     * Construct BBCode to align text to the <b>center</b>.
+     *
+     * @param   renderText
+     *
+     * The element to render as center-aligned text.
+     *
+     * @return
+     *
+     * The <code>String</code>:
+     * <code>[center]foo[/center]</code>.
+     */
+    public final String center(Object renderText) {
+        return ("[center]${renderText}[/center]")
+    }
+
+    /**
+     * Construct BBCode to change the text size.
+     *
+     * @param   size
+     *
+     * The font-point size of the <code>renderText</code>.
+     *
+     * @param   renderText
+     *
+     * The element to render at the specified <code>size</code>
+     *
+     * @return
+     *
+     * Given the <code>size</code> is 10, the <code>String</code>:
+     * <code>[size=10]foo[/size].
+     */
+    public final String size(int size, Object renderText) {
+        return ("[size=${size}]${renderText}[/size]")
+    }
+
+    /**
+     * Construct BBCode to format text to a <b>Block-Quote</b>.
+     *
+     * @param   renderText
+     *
+     * The element to render as a block-quote.
+     *
+     * @return
+     *
+     * The <code>String</code>:
+     * <code>[quote]foo[/quote]</code>.
+     */
+    public final String quote(Object renderText) {
+        return ("[quote]${renderText}[/quote]")
+    }
+
+    /**
+     * Construct BBCode to format text to <b>Code</b> font.
+     *
+     * @param   renderText
+     *
+     * The element to render as code-formatted text.
+     *
+     * @return
+     *
+     * The <code>String</code>:
+     * <code>[code]foo[/code]</code>.
+     */
+    public final String code(Object renderText) {
+        return ("[code]${renderText}[/code]")
+    }
+
+    /**
+     * Construct BBCode to format elements into a <b>List</b>.
+     *
+     * @param   listEntries
+     *
+     * The list entries, to be bulleted as a List.
+     *
+     * @return
+     *
+     * The <code>String</code>:
+     * <code>[list][*]foo[*]bar[*]baz[/list]</code>
+     */
+    public final String list(Object... listEntries) {
+        StringBuffer list = new StringBuffer("[list][/list]")
+
+        listEntries.each { entry ->
+            list.insert(list.size() - 7, "[*]${entry}")
+        }
+
+        return list
+    }
+
+    /**
      * Construct a BBCode Table out of a pre-established
      * <code>tableMatrix</code>-like structure.
      *
@@ -430,6 +526,28 @@ class BBCodeBuilder {
         new BBCodeTableBuilder().table(closure)
     }
 
+    /**
+     * Build a complex <code>String</code> incorperating multiple tags.
+     *
+     * <p>
+     * Sample:
+     *
+     * <code><pre>
+     * new BBCodeBuilder().build {
+     *     "This is a ${b(code('String))} built using ${code(size(5, "build"))}"
+     * }
+     * </pre></code>
+     * </p>
+     *
+     * @param   closure
+     *
+     * The Closure to use, which should return a <code>String</code>.
+     *
+     * @return
+     *
+     * A <code>String</code> with the BBCodeBuilder syntaxes replaced
+     * with BBCode.
+     */
     public final String build(Closure closure) {
         Closure runClosure = closure.clone()
 
