@@ -105,6 +105,12 @@ class BBCodeBuilderTests extends GroovyTestCase
         assertEquals("[list][*]foo[*]bar[*]baz[/list]", builder.list("foo", "bar", "baz"))
     }
 
+    void testTag()
+    {
+        assertEquals("[foo]Hello![/foo]", builder.tag("foo", "Hello!"))
+        assertEquals("[foo=bar]Hello![/foo]", builder.tag("foo", "bar", "Hello!"))
+    }
+
     void testTableByListParam()
     {
         String expected =

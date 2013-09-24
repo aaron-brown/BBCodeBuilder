@@ -527,6 +527,51 @@ class BBCodeBuilder {
     }
 
     /**
+     * Construct a custom BBCode Tag.
+     *
+     * @param   label
+     *
+     * The label of the tag.
+     *
+     * @param   content
+     *
+     * The content of the tag.
+     *
+     * @return
+     *
+     * Given the <code>label</code> as <b><code>foo</code></b> the
+     * result is the tag <code>[foo]content[/foo]</code>.
+     */
+    public final String tag(String label, Object content) {
+        return ("[${label}]${content}[/${label}]")
+    }
+
+    /**
+     * Construct a custom BBCode Tag.
+     *
+     * @param   label
+     *
+     * The label of the tag.
+     *
+     * @param   attribute
+     *
+     * An attribute to assign with the tag.
+     *
+     * @param   content
+     *
+     * The content of the tag.
+     *
+     * @return
+     *
+     * Given the <code>label</code> as <b><code>foo</code></b> and the
+     * <code>attribute</code> as <b><code>bar</code></b>, the result is
+     * the tag <code>[foo=bar]content[/foo]</code>.
+     */
+    public final String tag(String label, Object attribute,  Object content) {
+        return ("[${label}=${attribute}]${content}[/${label}]")
+    }
+
+    /**
      * Build a complex <code>String</code> incorperating multiple tags.
      *
      * <p>
