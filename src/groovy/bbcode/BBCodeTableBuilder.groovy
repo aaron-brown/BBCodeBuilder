@@ -771,4 +771,159 @@ class BBCodeTableBuilder {
     public final String white(Object renderText) {
         bbCodeBuilder.white(renderText)
     }
+
+    /**
+     * Construct BBCode to align text to the <b>center</b>.
+     *
+     * @param   renderText
+     *
+     * The element to render as center-aligned text.
+     *
+     * @return
+     *
+     * The <code>String</code>:
+     * <code>[center]foo[/center]</code>.
+     */
+    public final String center(Object renderText) {
+        bbcodeBuilder.center(renderText)
+    }
+
+    /**
+     * Construct BBCode to change the text size.
+     *
+     * @param   size
+     *
+     * The font-point size of the <code>renderText</code>.
+     *
+     * @param   renderText
+     *
+     * The element to render at the specified <code>size</code>
+     *
+     * @return
+     *
+     * Given the <code>size</code> is 10, the <code>String</code>:
+     * <code>[size=10]foo[/size].
+     */
+    public final String size(int size, Object renderText) {
+        bbcodeBuilder.size(size, renderText)
+    }
+
+    /**
+     * Construct BBCode to format text to a <b>Block-Quote</b>.
+     *
+     * @param   renderText
+     *
+     * The element to render as a block-quote.
+     *
+     * @return
+     *
+     * The <code>String</code>:
+     * <code>[quote]foo[/quote]</code>.
+     */
+    public final String quote(Object renderText) {
+        bbcodeBuilder.quote(renderText)
+    }
+
+    /**
+     * Construct BBCode to format text to <b>Code</b> font.
+     *
+     * @param   renderText
+     *
+     * The element to render as code-formatted text.
+     *
+     * @return
+     *
+     * The <code>String</code>:
+     * <code>[code]foo[/code]</code>.
+     */
+    public final String code(Object renderText) {
+        bbcodeBuilder.code(renderText)
+    }
+
+    /**
+     * Construct BBCode to format elements into a <b>List</b>.
+     *
+     * @param   listEntries
+     *
+     * The list entries, to be bulleted as a List.
+     *
+     * @return
+     *
+     * The <code>String</code>:
+     * <code>[list][*]foo[*]bar[*]baz[/list]</code>
+     */
+    public final String list(Object... listEntries) {
+        bbcodeBuilder.list(listEntries)
+    }
+
+    /**
+     * Construct a custom BBCode Tag.
+     *
+     * @param   label
+     *
+     * The label of the tag.
+     *
+     * @param   content
+     *
+     * The content of the tag.
+     *
+     * @return
+     *
+     * Given the <code>label</code> as <b><code>foo</code></b> the
+     * result is the tag <code>[foo]content[/foo]</code>.
+     */
+    public final String tag(String label, Object content) {
+        bbcodeBuilder.tag(label, content)
+    }
+
+    /**
+     * Construct a custom BBCode Tag.
+     *
+     * @param   label
+     *
+     * The label of the tag.
+     *
+     * @param   attribute
+     *
+     * An attribute to assign with the tag.
+     *
+     * @param   content
+     *
+     * The content of the tag.
+     *
+     * @return
+     *
+     * Given the <code>label</code> as <b><code>foo</code></b> and the
+     * <code>attribute</code> as <b><code>bar</code></b>, the result is
+     * the tag <code>[foo=bar]content[/foo]</code>.
+     */
+    public final String tag(String label, Object attribute, Object content) {
+        bbcodeBuilder.tag(label, attribute, content)
+    }
+
+    /**
+     * Build a complex <code>String</code> incorperating multiple tags.
+     *
+     * <p>
+     * Sample:
+     *
+     * <code><pre>
+     * new BBCodeBuilder().build {
+     *     "This is a ${b(code('String))} built using ${code(size(5, "build"))}"
+     * }
+     * </pre></code>
+     * </p>
+     *
+     * @param   closure
+     *
+     * The Closure to use, which should return a <code>String</code>.
+     *
+     * @return
+     *
+     * A <code>String</code> with the BBCodeBuilder syntaxes replaced
+     * with BBCode.
+     */
+    public final String build(Closure closure) {
+        bbcodeBuilder.build(closure)
+    }
 }
